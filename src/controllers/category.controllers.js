@@ -1,7 +1,5 @@
 const catchError = require('../utils/catchError');
 const Category = require('../models/Category');
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 
 const getAll = catchError(async(req, res) => {
     const results = await Category.findAll();

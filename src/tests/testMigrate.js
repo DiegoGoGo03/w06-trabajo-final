@@ -1,6 +1,7 @@
+require('../models')
+
 const sequelize = require("../utils/connection");
 const userCreate = require("./createData/userCreate");
-require('../models')
 
 const testMigrate = async () => {
 
@@ -11,7 +12,7 @@ const testMigrate = async () => {
         await userCreate()
 
         process.exit()
-    }catch(error){
+    } catch(error){
         console.error(error);
     }
 }

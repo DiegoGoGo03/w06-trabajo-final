@@ -33,7 +33,7 @@ test("POST -> BASE_URL, should return statusCode 201, res.body.name === category
         .send(category)
         .set('Authorization', `Bearer ${TOKEN}`)
 
-    console.log(res.body); // Depurar el problema
+    //console.log(res.body); // Depurar el problema
     categoryId = res.body.id
 
     expect(res.statusCode).toBe(201)

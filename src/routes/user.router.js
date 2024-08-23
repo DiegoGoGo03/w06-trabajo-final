@@ -13,6 +13,6 @@ routerUser.route('/login')
 
 routerUser.route('/:id')
   .delete(verifyJwt, remove)
-  .put(update);
+  .put(verifyJwt, update);
 
 module.exports = routerUser;

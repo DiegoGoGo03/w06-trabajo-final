@@ -3,10 +3,11 @@ const sequelize = require('../utils/connection');
 const bcrypt = require("bcrypt")
 
 const Category = sequelize.define('category', {
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
 });
 
 Category.beforeCreate(async (category) => {

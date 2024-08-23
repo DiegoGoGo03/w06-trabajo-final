@@ -2,7 +2,7 @@ const sequelize = require("../utils/connection")
 
 require('../models')
 
-const testMigrate = async()=>{
+const testMigrate = async () => {
 
     try {
         await sequelize.sync({force:true})

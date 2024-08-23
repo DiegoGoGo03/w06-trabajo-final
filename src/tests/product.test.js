@@ -1,5 +1,6 @@
-const request = requiere('supertest')
+const request = require('supertest')
 const app = require('../app')
+const Category = require("../models/Category")
 
 let TOKEN
 const BASE_URL_LOGIN = 'api/v1/users/login'
@@ -30,5 +31,21 @@ beforeAll(async () => {
 })
 
 test("POST -> BASE_URL, should return status code 201, and res.body.title === product.title", async () => {
+    const res = await request(app)
+        .post(BASE_URL)
+        .send(product)
+        .set('Authorization', `Bearer ${TOKEN}`)
+})
 
+
+
+test("POST -> 'BASE_URL', should return status code 201, and res.body.title === product.title", async () => {
+    const res = await request(app)
+        .post(BASE_URL)
+        .send(product)
+        .set('Authorization', `Bearer ${TOKEN}`)
+    expect(res.status.toBe(201))
+    expect(res.body).toBeDefined()
+    expect(res.body.title).toBe(product.title)
+    expect(res.body.categoryId).tobe(category.id)
 })

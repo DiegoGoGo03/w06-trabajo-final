@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/connection');
-const bcrypt = require("bcrypt")
 
 const Category = sequelize.define('category', {
   name: {
@@ -10,10 +9,5 @@ const Category = sequelize.define('category', {
   },
 });
 
-Category.beforeCreate(async (category) => {
-    const password = category.password
-    const hashPassword = await bcrypt.hash(password, 10)
-    category.password = hashPassword
-})
 
 module.exports = Category;

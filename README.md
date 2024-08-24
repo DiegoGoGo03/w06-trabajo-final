@@ -1,3 +1,5 @@
+![DB_DIAGRAM](./src/img/DB_DIAGRAM.png)
+
 # eCommerce API
 
 Este es un proyecto de backend para una aplicación de eCommerce que proporciona endpoints para gestionar usuarios, categorías, productos, carritos de compra, compras y imágenes de productos.
@@ -111,7 +113,3 @@ Este modelo representa las imágenes de los productos.
 ## Pruebas
 
 Ejecuta las pruebas con `npm test`.
-
----
-
-Este proyecto está en desarrollo, y algunas funcionalidades aún están pendientes de implementación.

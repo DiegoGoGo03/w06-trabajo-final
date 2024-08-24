@@ -4,6 +4,8 @@ const Category = require('../models/Category');
 const Product = require('../models/Product');
 
 const getAll = catchError(async(req, res) => {
+
+    const userId = req.user.id
     const results = await Cart.findAll({
         where: { userId },
         include: [
@@ -27,7 +29,7 @@ const create = catchError(async(req, res) => {
     const userId = req.user.id
     const { productId, quantity } = req.body
     const body = { productId, quantity, userId }
-    const result = await Cart.create(req.body);
+    const result = await Cart.create(body);
     return res.status(201).json(result);
 });
 
@@ -38,7 +40,7 @@ const getOne = catchError(async(req, res) => {
         where: { userId },
         inlcude: [
             {
-                mode: Product,
+                model: Product,
                 attributes: { exclude: ['updateAt', 'createdAt'] },
                 include: [
                     {
@@ -49,6 +51,7 @@ const getOne = catchError(async(req, res) => {
             }
         ]
     });
+
     if(!result) return res.sendStatus(404);
     return res.json(result);
 });
@@ -56,7 +59,7 @@ const getOne = catchError(async(req, res) => {
 const remove = catchError(async(req, res) => {
     const userId = req.user.id
     const { id } = req.params;
-    const result = await Cart.destroy({ where: {id} });
+    const result = await Cart.destroy({ where: { id, userId} });
     if(!result) return res.sendStatus(404);
     return res.sendStatus(204);
 });

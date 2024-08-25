@@ -26,24 +26,27 @@ const getAll = catchError(async(req, res) => {
 });
 
 
-const create = catchError(async(req, res) => {
-    const userId = req.user.id
+const create = catchError(async (req, res) => {
+    const userId = req.user.id;
 
+    // Obtener todos los elementos del carrito del usuario
     const cart = await Cart.findAll({
         where: { userId },
         raw: true,
         attributes: ['quantity', 'userId', 'productId']
-    })
+    });
 
-    if (!cart) return res.sendStatus(404)
+    if (cart.length === 0) return res.status(400).json({ message: 'Cart is empty' });
 
-        const result = await Purchase.bulkCreate(cart)
-        await Cart.destroy({ where: { userId } })
-        return res.status(201).json(result)
+    // Crear compras basadas en los elementos del carrito
+    const result = await Purchase.bulkCreate(cart);
 
-    // console.log(cart)
+    // Limpiar el carrito después de crear las compras
+    await Cart.destroy({ where: { userId } });
 
-})
+    return res.status(201).json(result);
+});
+
 
 module.exports = {
     getAll,

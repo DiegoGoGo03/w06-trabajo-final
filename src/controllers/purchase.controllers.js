@@ -5,7 +5,7 @@ const Category = require('../models/Category');
 const Product = require('../models/Product');
 
 const getAll = catchError(async(req, res) => {
-    const userId = req.user.userId
+    const userId = req.user.id
     const purchase = await Purchase.findAll({
         where: { userId },
         include: [
@@ -21,7 +21,7 @@ const getAll = catchError(async(req, res) => {
             }
         ]
     })
-    return res.jason(purchase)
+    return res.json(purchase)
 
 });
 
@@ -39,9 +39,9 @@ const create = catchError(async(req, res) => {
 
         const result = await Purchase.bulkCreate(cart)
         await Cart.destroy({ where: { userId } })
-        return res.satatus(201).json(result)
+        return res.status(201).json(result)
 
-    console.log(cart)
+    // console.log(cart)
 
 })
 

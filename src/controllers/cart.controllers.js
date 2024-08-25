@@ -38,7 +38,7 @@ const getOne = catchError(async(req, res) => {
     const { id } = req.params;
     const result = await Cart.findByPk(id, {
         where: { userId },
-        inlcude: [
+        include: [
             {
                 model: Product,
                 attributes: { exclude: ['updateAt', 'createdAt'] },

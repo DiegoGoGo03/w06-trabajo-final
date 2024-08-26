@@ -13,7 +13,7 @@ Category.hasMany(Product)
 
 // Cart => userId
 Cart.belongsTo(User)
-User.hasMany(Product)
+User.hasMany(Cart)
 
 
 // Cart => productId

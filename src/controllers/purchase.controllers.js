@@ -36,10 +36,14 @@ const create = catchError(async (req, res) => {
         attributes: ['quantity', 'userId', 'productId']
     });
 
+    console.log('Cart Items:', cart); // Depurar el contenido del carrito
+
     if (cart.length === 0) return res.status(400).json({ message: 'Cart is empty' });
 
     // Crear compras basadas en los elementos del carrito
     const result = await Purchase.bulkCreate(cart);
+
+    console.log('Purchase Result:', result); // Depurar el resultado de la creación
 
     // Limpiar el carrito después de crear las compras
     await Cart.destroy({ where: { userId } });

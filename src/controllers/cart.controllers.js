@@ -3,45 +3,69 @@ const Cart = require('../models/Cart');
 const Category = require('../models/Category');
 const Product = require('../models/Product');
 
-const getAll = catchError(async(req, res) => {
 
-    const userId = req.user.id
-    const results = await Cart.findAll({
-        where: { userId },
-        include: [
-            {
-                model: Product,
-                attributes: { exclude: ['updateAt', 'createdAt'] },
-                include: [
-                    {
-                        model: Category,
-                        attributes: ['name', 'id']
-                    }
-                ]
-            }
-        ]
-    });
+const getAll = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const results = await Cart.findAll({
+            where: { userId },
+            include: [
+                {
+                    model: Product,
+                    attributes: { exclude: ['updatedAt', 'createdAt'] },
+                    include: [
+                        {
+                            model: Category,
+                            attributes: ['name', 'id']
+                        }
+                    ]
+                }
+            ]
+        });
 
-    return res.json(results);
-});
+        return res.json(results);
+    } catch (error) {
+        console.error('Error en getAll:', error);
+        return res.status(500).json({ message: 'Error en el servidor' });
+    }
+};
+
+
+
+
+
+
 
 const create = catchError(async(req, res) => {
-    const userId = req.user.id
-    const { productId, quantity } = req.body
-    const body = { productId, quantity, userId }
+    const userId = req.user.id;
+    const { productId, quantity } = req.body;
+    const body = { productId, quantity, userId };
+    
+    // Crear el item en el carrito
     const result = await Cart.create(body);
-    return res.status(201).json(result);
+
+    // Buscar y retornar el item con el producto incluido
+    const cartItem = await Cart.findByPk(result.id, {
+        include: {
+            model: Product,
+            attributes: ['id', 'title', 'description'] // Asegúrate de incluir los atributos que deseas
+        }
+    });
+
+    return res.status(201).json(cartItem);
 });
 
+
+
 const getOne = catchError(async(req, res) => {
-    const userId = req.user.id
+    const userId = req.user.id;
     const { id } = req.params;
     const result = await Cart.findByPk(id, {
         where: { userId },
         include: [
             {
                 model: Product,
-                attributes: { exclude: ['updateAt', 'createdAt'] },
+                attributes: { exclude: ['updatedAt', 'createdAt'] },  // Verifica que las columnas existen
                 include: [
                     {
                         model: Category,
@@ -52,9 +76,12 @@ const getOne = catchError(async(req, res) => {
         ]
     });
 
-    if(!result) return res.sendStatus(404);
+    if (!result) return res.sendStatus(404);
     return res.json(result);
 });
+
+
+
 
 const remove = catchError(async(req, res) => {
     const userId = req.user.id

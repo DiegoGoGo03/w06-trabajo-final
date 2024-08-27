@@ -41,14 +41,12 @@ const create = catchError(async(req, res) => {
     const { productId, quantity } = req.body;
     const body = { productId, quantity, userId };
     
-    // Crear el item en el carrito
     const result = await Cart.create(body);
 
-    // Buscar y retornar el item con el producto incluido
     const cartItem = await Cart.findByPk(result.id, {
         include: {
             model: Product,
-            attributes: ['id', 'title', 'description'] // Asegúrate de incluir los atributos que deseas
+            attributes: ['id', 'title', 'description']
         }
     });
 
@@ -65,7 +63,7 @@ const getOne = catchError(async(req, res) => {
         include: [
             {
                 model: Product,
-                attributes: { exclude: ['updatedAt', 'createdAt'] },  // Verifica que las columnas existen
+                attributes: { exclude: ['updatedAt', 'createdAt'] },
                 include: [
                     {
                         model: Category,

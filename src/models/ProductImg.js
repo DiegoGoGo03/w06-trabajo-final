@@ -12,6 +12,7 @@ const ProductImg = sequelize.define('productImg', {
     },
     //productId
 }, {
+    // No se va a crear createAt ni updateAt
     timestamps: false
 });
 

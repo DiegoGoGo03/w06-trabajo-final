@@ -33,9 +33,6 @@ const getAll = async (req, res) => {
 
 
 
-
-
-
 const create = catchError(async(req, res) => {
     const userId = req.user.id;
     const { productId, quantity } = req.body;
@@ -80,7 +77,6 @@ const getOne = catchError(async(req, res) => {
 
 
 
-
 const remove = catchError(async(req, res) => {
     const userId = req.user.id
     const { id } = req.params;
@@ -88,6 +84,7 @@ const remove = catchError(async(req, res) => {
     if(!result) return res.sendStatus(404);
     return res.sendStatus(204);
 });
+
 
 const update = catchError(async(req, res) => {
     const userId = req.user.id

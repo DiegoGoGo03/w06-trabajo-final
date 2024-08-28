@@ -1,7 +1,7 @@
 const catchError = require('../utils/catchError');
 const ProductImg = require('../models/ProductImg');
 const path = require('path')
-const fs = require()
+const fs = require('fs')
 
 const getAll = catchError(async(req, res) => {
     const results = await ProductImg.findAll();
@@ -31,7 +31,6 @@ const remove = catchError(async(req, res) => {
     await image.destroy()
 
     return res.sendStatus(204)
-
 
     // const result = await ProductImg.destroy({ where: {id} });
     // if(!result) return res.sendStatus(404);

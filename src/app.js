@@ -16,7 +16,7 @@ app.use(helmet({
 }));
 app.use(cors());
 
-// PUBLIC
+// PUBLIC - Poner siempre por encima de la ruta
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api/v1', router);
